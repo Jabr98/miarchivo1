@@ -1,0 +1,34 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Clonar repositorio
+      uses: actions/checkout@v3
+
+    - name: ⚙️ Configurar Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: 📦 Instalar dependencias
+      run: npm install
+
+    - name: 🏁 Iniciar servidor en segundo plano
+      run: |
+        npm install -g serve
+        nohup node index.js > log.txt 2>&1 &
+
+    - name: 🧪 Ejecutar pruebas con Jest
+      run: npm test
+
+    - name: 🧪 Ejecutar pruebas con Cypress
+      run: npx cypress run
