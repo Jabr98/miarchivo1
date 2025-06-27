@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,13 +22,13 @@ jobs:
     - name: 📦 Instalar dependencias
       run: npm install
 
-    - name: 🏁 Iniciar servidor en segundo plano
-      run: |
-        npm install -g serve
-        nohup node index.js > log.txt 2>&1 &
-
     - name: 🧪 Ejecutar pruebas con Jest
       run: npm test
+
+    - name: 🚀 Levantar servidor en background
+      run: |
+        nohup npm start > server.log 2>&1 &
+        sleep 5
 
     - name: 🧪 Ejecutar pruebas con Cypress
       run: npx cypress run
