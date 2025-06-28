@@ -1,4 +1,6 @@
 require('dotenv').config(); 
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
+
 const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
@@ -9,7 +11,7 @@ const app = express();
 
 // Middleware para sesión
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: 'clave_secreta_temporal',
   resave: false,
   saveUninitialized: true
 }));

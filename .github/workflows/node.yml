@@ -1,0 +1,24 @@
+name: CI/CD Node App
+
+on:
+  push:
+    branches: [ "main" ] # o "master" si tu rama se llama así
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar el repositorio
+      uses: actions/checkout@v3
+
+    - name: Instalar Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    - name: Instalar dependencias
+      run: npm install
+
+    - name: Ejecutar pruebas con Jest
+      run: npm test
