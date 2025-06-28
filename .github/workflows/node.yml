@@ -2,7 +2,7 @@ name: CI/CD Node App
 
 on:
   push:
-    branches: [ "main" ] # o "master" si tu rama se llama así
+    branches: [ "main" ] 
 
 jobs:
   build:
