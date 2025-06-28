@@ -5,13 +5,14 @@ const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
 const jwt = require('jsonwebtoken');
+// const mime = require('mime'); ❌ innecesario, elimínalo
 require('./auth');
 
 const app = express();
 
 // Middleware para sesión
 app.use(session({
-  secret: 'clave_secreta_temporal',
+  secret: process.env.SESSION_SECRET || 'clave_secreta_temporal',
   resave: false,
   saveUninitialized: true
 }));
@@ -71,7 +72,9 @@ app.get('/api/protegido', verificarToken, (req, res) => {
 
 // Servidor
 if (require.main === module) {
-  app.listen(3000, () => console.log('Servidor en http://localhost:3000'));
+  app.listen(process.env.PORT || 3000, () =>
+    console.log(`Servidor en http://localhost:${process.env.PORT || 3000}`)
+  );
 }
 
-module.exports = app; // 👈 Esto es necesario para que supertest lo use
+module.exports = app;
